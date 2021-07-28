@@ -6,18 +6,37 @@ import ItemCount from './ItemCount';
 function ItemDetail(){
     
     const {itemID} = useParams();
+    const [cart,setCart] = useState([]);
     
     const [product, setProduct] = useState([]);
 
     const onAdd = (form) => {
-        //evita comportamientos por defecto HTML, no recarga la pagina con el submit
         form.preventDefault();
         if(form.target[0].value === 1){
             alert('Se agrego ' + form.target[0].value + ' item');
         }else{
             alert('Se agregaron ' + form.target[0].value + ' items');
         }
+
+        mostrarBtnComprar();
+
+        let itemAdd = [];
+        {product.map(e =>{
+            itemAdd = {
+                producto:e.titulo,
+                imgUrl:e.imgUrl,
+                precio:e.precio,
+                cantidad:form.target[0].value
+            }
+            setCart([...cart,itemAdd]);
+        })}
+        
+        console.log(itemAdd);
     }
+
+    const mostrarBtnComprar = () => {
+        document.getElementById('btnTerminarCompra').style.display = 'block';
+    } 
 
     const getProduct = async () =>{
         let data = await fetch(`http://localhost:4000/product/${itemID}`);
@@ -31,8 +50,7 @@ function ItemDetail(){
 
     useEffect(() => {
         getProduct()
-        
-    }, )
+    },)
 
 
 
@@ -47,6 +65,7 @@ function ItemDetail(){
                     <h2>{e.descripcion}</h2>
                     <h3>{'Categoria: '+e.categoria}</h3>
                     <h4>{e.precio}</h4>
+                    <button className='btn btn-secondary' type='button' style={{display:'none'}} id='btnTerminarCompra'>Terminar mi Compra</button>
                     <ItemCount 
                         stock={e.stock} 
                         initial={e.initial}

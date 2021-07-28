@@ -15,13 +15,13 @@ function NavBar(){
                     <Link to='/Productos' className="nav-link dropdown-toggle">Productos</Link>
                         <ul>
                             <li>
-                            <NavLink className="nav-link dropdown-item" to='/Productos/Categoria/estrellas' activeClassName='activo'>Estrellas</NavLink>   
+                                <NavLink className="nav-link dropdown-item" to='/Productos/Categoria/estrellas' activeClassName='activo'>Estrellas</NavLink>   
                             </li>
                             <li>
-                            <NavLink className="nav-link dropdown-item" to='/Productos/Categoria/planetas' activeClassName='activo'>Planetas</NavLink>
+                                <NavLink className="nav-link dropdown-item" to='/Productos/Categoria/planetas' activeClassName='activo'>Planetas</NavLink>
                             </li>
                             <li>
-                            <NavLink className="nav-link dropdown-item" to='/Productos/Categoria/satelites' activeClassName='activo'>Satelites</NavLink>
+                                <NavLink className="nav-link dropdown-item" to='/Productos/Categoria/satelites' activeClassName='activo'>Satelites</NavLink>
                             </li>
                         </ul>
                     </li>
