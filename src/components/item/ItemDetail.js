@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router';
 import { useState, useEffect } from 'react';
 import ItemCount from './ItemCount';
+import { Link } from 'react-router-dom'
 
 function ItemDetail(){
     
@@ -65,7 +66,11 @@ function ItemDetail(){
                     <h2>{e.descripcion}</h2>
                     <h3>{'Categoria: '+e.categoria}</h3>
                     <h4>{e.precio}</h4>
-                    <button className='btn btn-secondary' type='button' style={{display:'none'}} id='btnTerminarCompra'>Terminar mi Compra</button>
+                    <button className='btn btn-secondary' type='button' style={{display:'none'}} id='btnTerminarCompra'>
+                        <Link className="nav-link" to={`/Carrito`}>
+                            Terminar mi Compra
+                        </Link>
+                    </button>
                     <ItemCount 
                         stock={e.stock} 
                         initial={e.initial}
