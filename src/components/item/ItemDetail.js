@@ -1,23 +1,25 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext} from 'react';
 import ItemCount from './ItemCount';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+//import contexto from '../context/Context';
 
 function ItemDetail(){
     
     const {itemID} = useParams();
-    const [cart,setCart] = useState([]);
     
+    const [cart,setCart] = useState([]);
     const [product, setProduct] = useState([]);
+
+    //let {item, validoCart} = useContext(contexto);
+
+    const clickTerminarCompra = () =>{
+        //validoCart();
+    }
 
     const onAdd = (form) => {
         form.preventDefault();
-        if(form.target[0].value === 1){
-            alert('Se agrego ' + form.target[0].value + ' item');
-        }else{
-            alert('Se agregaron ' + form.target[0].value + ' items');
-        }
 
         mostrarBtnComprar();
 
@@ -61,17 +63,17 @@ function ItemDetail(){
         {product.map(e =>{
             return (
                 <div>
-                    <h1>{e.titulo}</h1>
-                    <img src={e.imgUrl} alt={e.alt} style={{width:'600px',height:'600px'}}/>
-                    <h2>{e.descripcion}</h2>
-                    <h3>{'Categoria: '+e.categoria}</h3>
-                    <h4>{e.precio}</h4>
-                    <button className='btn btn-secondary' type='button' style={{display:'none'}} id='btnTerminarCompra'>
-                        <Link className="nav-link" to={`/Carrito`}>
+                    <button className='btn btn-secondary' type='button' style={{display:'none'}} id='btnTerminarCompra' onClick={clickTerminarCompra}>
+                        <Link className="nav-link" to='/Carrito' style={{color:'white'}}>
                             Terminar mi Compra
                         </Link>
                     </button>
-                    <ItemCount 
+                    <h1>{e.titulo}</h1>
+                    <h4>{e.precio}</h4>
+                    <img src={e.imgUrl} alt={e.alt} style={{width:'300px',height:'300px'}}/>
+                    <h2>{e.descripcion}</h2>
+                    <h3>{'Categoria: '+e.categoria}</h3>
+                     <ItemCount 
                         stock={e.stock} 
                         initial={e.initial}
                         onAdd={onAdd}

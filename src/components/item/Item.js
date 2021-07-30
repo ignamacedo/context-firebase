@@ -1,20 +1,8 @@
 import React from 'react';
-import ItemCount from './ItemCount';
 import { Link } from 'react-router-dom';
 
 const Item = ({ item }) => {
 
-    const onAdd = (form) => {
-        //evita comportamientos por defecto HTML, no recarga la pagina con el submit
-        form.preventDefault();
-        if(form.target[0].value === 1){
-            alert('Se agrego ' + form.target[0].value + ' item');
-        }else{
-            alert('Se agregaron ' + form.target[0].value + ' items');
-        }
-    }
-    
-  
     return(
         
         <div className="col">
@@ -31,13 +19,6 @@ const Item = ({ item }) => {
                 <ul className='list-group list-group-flush'>
                     <li className='list-group-item' style={{textAlign:'center'}}>{item.precio}</li>
                 </ul>
-                <div className='card-body'>
-                    <ItemCount 
-                        stock={item.stock} 
-                        initial={item.initial}
-                        onAdd={onAdd}
-                  />
-                </div>
             </div>
         </div>
     

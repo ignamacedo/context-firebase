@@ -1,9 +1,15 @@
-import React from 'react'; 
+import React, { useContext } from 'react'; 
 import CartWidget from './CartWidget';
 import logo from '../../img/logo.png';
 import { Link, NavLink } from 'react-router-dom'
+import { CartContext, useCartContext} from '../context/Context';
 
 function NavBar(){
+
+/*const { items } = useContext(CartContext);
+console.log(items);*/
+const { items, cartCount } = useCartContext();
+
     return(
         <nav className="navbar navbar-expand-md navbar-dark bg-dark">
             <div className="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
@@ -40,7 +46,7 @@ function NavBar(){
             <div className="navbar-collapse collapse w-100 order-2 dual-collapse2 justify-content-end">
                 <ul className="navbar-nav ml-auto">
                     <button className="btn btn-dark">
-                        <Link to="/Carrito" className="nav-link"><CartWidget/></Link> 
+                        {cartCount} <Link to="/Carrito" className="nav-link"><CartWidget/></Link> 
                     </button>
                 </ul>
             </div>

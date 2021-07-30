@@ -8,10 +8,12 @@ import ItemDetail from '../item/ItemDetail';
 import MasDeCosmos from '../pages/MasDeCosmos';
 import Cart from '../pages/Cart';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import CartProvider, { CartContext } from '../context/Context';
 
 function Index(){
     return(
         <div>
+            <CartProvider>
             <Router>
                 <NavBar/>
                 <Switch>
@@ -23,6 +25,7 @@ function Index(){
                     <Route path={'/Carrito'} exact component={Cart}/>
                 </Switch>
             </Router>
+            </CartProvider>
         </div>
         
     );
