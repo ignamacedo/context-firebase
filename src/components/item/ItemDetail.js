@@ -1,40 +1,23 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import { useState, useEffect, useContext} from 'react';
+import { useState, useEffect} from 'react';
 import ItemCount from './ItemCount';
 import { Link } from 'react-router-dom';
-//import contexto from '../context/Context';
+import {useCartContext} from '../context/Context';
 
 function ItemDetail(){
     
     const {itemID} = useParams();
-    
-    const [cart,setCart] = useState([]);
     const [product, setProduct] = useState([]);
+    const [qty, setQty] = useState();
 
-    //let {item, validoCart} = useContext(contexto);
-
-    const clickTerminarCompra = () =>{
-        //validoCart();
-    }
+    const { addToCart } = useCartContext();
 
     const onAdd = (form) => {
         form.preventDefault();
 
         mostrarBtnComprar();
-
-        let itemAdd = [];
-        {product.map(e =>{
-            itemAdd = {
-                producto:e.titulo,
-                imgUrl:e.imgUrl,
-                precio:e.precio,
-                cantidad:form.target[0].value
-            }
-            setCart([...cart,itemAdd]);
-        })}
-        
-        console.log(itemAdd);
+        setQty(form.target[0].value);
     }
 
     const mostrarBtnComprar = () => {
@@ -53,7 +36,7 @@ function ItemDetail(){
 
     useEffect(() => {
         getProduct()
-    },)
+    })
 
 
 
@@ -63,7 +46,7 @@ function ItemDetail(){
         {product.map(e =>{
             return (
                 <div>
-                    <button className='btn btn-secondary' type='button' style={{display:'none'}} id='btnTerminarCompra' onClick={clickTerminarCompra}>
+                    <button className='btn btn-secondary' type='button' style={{display:'none'}} id='btnTerminarCompra' onClick={()=>addToCart(product,qty)}>
                         <Link className="nav-link" to='/Carrito' style={{color:'white'}}>
                             Terminar mi Compra
                         </Link>
