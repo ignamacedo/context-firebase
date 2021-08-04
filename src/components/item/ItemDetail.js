@@ -9,19 +9,18 @@ function ItemDetail(){
     
     const {itemID} = useParams();
     const [product, setProduct] = useState([]);
-    const [qty, setQty] = useState();
+    const [qty, setQty] = useState(1);
+    const [mostrarBtn, setMostrarBtn] = useState(true);
 
     const { addToCart } = useCartContext();
 
     const onAdd = (form) => {
         form.preventDefault();
-
-        mostrarBtnComprar();
         setQty(form.target[0].value);
     }
 
-    const mostrarBtnComprar = () => {
-        document.getElementById('btnTerminarCompra').style.display = 'block';
+    const terminarCompra = () => {
+        setMostrarBtn(!mostrarBtn);
     } 
 
     const getProduct = async () =>{
@@ -35,24 +34,22 @@ function ItemDetail(){
     }
 
     useEffect(() => {
-        getProduct()
-    })
-
-
+        getProduct();
+    });
 
     return (
         <div>
         <h1>ITEM DETAIL</h1>
         {product.map(e =>{
             return (
-                <div>
-                    <button className='btn btn-secondary' type='button' style={{display:'none'}} id='btnTerminarCompra' onClick={()=>addToCart(product,qty)}>
+                <div key={e.id}>
+                    {!mostrarBtn && <button className='btn btn-secondary' type='button' onClick={()=>addToCart(product,qty)} disabled={mostrarBtn}>
                         <Link className="nav-link" to='/Carrito' style={{color:'white'}}>
-                            Terminar mi Compra
+                            Agregaste {qty} items al carro - Terminar Compra
                         </Link>
-                    </button>
+                    </button>}
                     <h1>{e.titulo}</h1>
-                    <h4>{e.precio}</h4>
+                    <h4>${e.precio}M</h4>
                     <img src={e.imgUrl} alt={e.alt} style={{width:'300px',height:'300px'}}/>
                     <h2>{e.descripcion}</h2>
                     <h3>{'Categoria: '+e.categoria}</h3>
@@ -60,6 +57,8 @@ function ItemDetail(){
                         stock={e.stock} 
                         initial={e.initial}
                         onAdd={onAdd}
+                        terminarCompra={terminarCompra}
+                        mostrarBtn={mostrarBtn}
                   />
                 </div>
             )

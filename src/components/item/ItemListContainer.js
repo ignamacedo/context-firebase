@@ -29,7 +29,7 @@ const ItemListContainer = (props) => {
             <p>LOADING....</p>
             :
             items.map((item) => (
-              <Item item={item}/>
+              <Item key={item.id} item={item}/>
             ))
             }
         </div>

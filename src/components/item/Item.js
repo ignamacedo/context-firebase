@@ -17,7 +17,7 @@ const Item = ({ item }) => {
                     <p className='card-text'>{'Categoria: '+item.categoria}</p>
                 </div>
                 <ul className='list-group list-group-flush'>
-                    <li className='list-group-item' style={{textAlign:'center'}}>{item.precio}</li>
+                    <li className='list-group-item' style={{textAlign:'center'}}>${item.precio}M</li>
                 </ul>
             </div>
         </div>

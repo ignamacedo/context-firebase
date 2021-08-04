@@ -6,7 +6,7 @@
         "titulo": "Titulo 1",
         "descripcion": "Descripcion 1",
         "categoria": "estrellas",
-        "precio": "$750M",
+        "precio": 750,
         "alt": "Imagen Producto 1",
         "initial": 1,
         "stock": 5
@@ -17,7 +17,7 @@
         "titulo": "Titulo 2",
         "descripcion": "Descripcion 2",
         "categoria": "estrellas",
-        "precio": "$800M",
+        "precio": 800,
         "alt": "Imagen Producto 2",
         "initial": 1,
         "stock": 3
@@ -28,7 +28,7 @@
         "titulo": "Titulo 3",
         "descripcion": "Descripcion 3",
         "categoria": "estrellas",
-        "precio": "$70M",
+        "precio": 70,
         "alt": "Imagen Producto 3",
         "initial": 1,
         "stock": 12
@@ -39,7 +39,7 @@
         "titulo": "Titulo 4",
         "descripcion": "Descripcion 4",
         "categoria": "estrellas",
-        "precio": "$250M",
+        "precio": 250,
         "alt": "Imagen Producto 4",
         "initial": 1,
         "stock": 8
@@ -51,10 +51,10 @@
         "titulo": "Titulo 5",
         "descripcion": "Descripcion 5",
         "categoria": "planetas",
-        "precio": "$1550M",
+        "precio": 1550,
         "alt": "Imagen Producto 5",
         "initial": 1,
-        "stock": 1
+        "stock": 2
 
     },
     {
@@ -63,10 +63,10 @@
         "titulo": "Titulo 6",
         "descripcion": "Descripcion 6",
         "categoria": "planetas",
-        "precio": "$2300M",
+        "precio": 2300,
         "alt": "Imagen Producto 6",
         "initial": 1,
-        "stock": 1
+        "stock": 2
 
     },
     {
@@ -75,10 +75,10 @@
         "titulo": "Titulo 7",
         "descripcion": "Descripcion 7",
         "categoria": "planetas",
-        "precio": "$3650M",
+        "precio": 3650,
         "alt": "Imagen Producto 7",
         "initial": 1,
-        "stock": 1
+        "stock": 4
 
     },
     {
@@ -87,7 +87,7 @@
         "titulo": "Titulo 8",
         "descripcion": "Descripcion 8",
         "categoria": "stelites",
-        "precio": "$2500M",
+        "precio": 2500,
         "alt": "Imagen Producto 8",
         "initial": 1,
         "stock": 3
@@ -99,7 +99,7 @@
         "titulo": "Titulo 9",
         "descripcion": "Descripcion 9",
         "categoria": "satelites",
-        "precio": "$1321M",
+        "precio": 1321,
         "alt": "Imagen Producto 9",
         "initial": 1,
         "stock": 4
