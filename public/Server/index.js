@@ -52,4 +52,21 @@ app.get('/product/category/:categoryID', (req,res) => {
     res.send(json);
 
 })
+app.get('/categories', (req, res) => {
+    console.log('CATEGORIAS');
+    var json = fs.readFileSync('../JSON/Datalist.json',"utf8",(err,content) =>{
+       err ? console.log(err):JSON.parse(content);
+    });
+
+    json = JSON.parse(json);
+    var na = [];
+    json.map((j) =>{
+        if(!(na.includes(j.categoria))){
+            na.push(j.categoria);
+        }
+    })
+    //console.log(na);
+    res.send(na);
+
+})
 app.listen(port, () => console.log(`Example app listening on ${port} port!`))

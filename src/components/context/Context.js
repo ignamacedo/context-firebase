@@ -13,33 +13,18 @@ const CartProvider = ({children}) =>{
       setCartCount(Number(cartCount) + Number(qty));
     }
     const addItem = (item, qty) =>{
-      /*cartItems.map((p)=>{
-        let idCartItem = p[0].id;
-        console.log(idCartItem)
-        if(idCartItem.includes(item[0].id)){
-          alert('SI');
-        }else{
-          alert('NO');
-        }
-      })*/
-      
-      
-      /*if (cartItems.some(product => product[0].id === item.id)) {
-       const copy = [...cartItems];
-        const repeteadIndex = cartItems.findIndex(
-          product => product[0].titulo === item.titulo
-        );
-        copy[repeteadIndex] = {
-          ...copy[repeteadIndex],
-          //qty: qty
-          qty: copy[repeteadIndex].qty + qty
-        };
-        setCartItems(copy);
-      } else {
-        setCartItems([...cartItems, { ...item, qty }]);
-      }*/
+      if(cartItems.some(p => p[0].id === item[0].id)){
+        const copia = [...cartItems];
+        const index = cartItems.findIndex(p => p[0].id === item[0].id);
+        //console.log(index);
+        //console.log(copia[index]);
+        copia[index] = {...copia[index], qty: Number(copia[index].qty) + Number(qty)};
+        setCartItems(copia);
+        //console.log(cartItems);
+      }else{
+        setCartItems([...cartItems,{...item,qty}]);
+      }
       setTotal(total + (qty * item[0].precio));
-      setCartItems([...cartItems,{...item,qty}]);
     }
 
     const addToCart = (item,qty) => {
@@ -47,13 +32,19 @@ const CartProvider = ({children}) =>{
         addCount(qty);
      };
 
-     const deleteItem = (list) => {
-      setCartItems(list);
+     const deleteItemContext = (item) => {
+      const copia = [...cartItems];
+      const index = cartItems.findIndex(p => p[0].id === item[0].id);
+      console.log(copia);
+      copia.splice(index,1);
+      console.log(copia);
+      setCartItems(copia);
+      console.log(cartItems);
      }
      
 
     return(
-        <CartContext.Provider value={{cartCount, cartItems, addToCart, total, deleteItem}}>
+        <CartContext.Provider value={{cartCount, cartItems, addToCart, total, deleteItemContext}}>
             {children}
         </CartContext.Provider>
     );

@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import CartWidget from './CartWidget';
 import logo from '../../img/logo.png';
 import { Link, NavLink } from 'react-router-dom'
@@ -7,8 +7,26 @@ import { useCartContext} from '../context/Context';
 function NavBar(){
 
 const { cartCount } = useCartContext();
-//console.log(cartCount);
+const [categorias, setCategorias] = useState([]) ;
+
+    const getCategorias = async() =>{
+        const data = await fetch(`http://localhost:4000/categories`);
+        const responseData = await data.json();
+        return new Promise((res, rej) => {
+            setTimeout(() => {
+            res(setCategorias(responseData));
+            setCategorias(responseData);
+           },);
+        });
+    }
+
+    useEffect(()=>{
+        getCategorias();
+        //console.log(categorias);
+    },[]);
+
     return(
+        
         <nav className="navbar navbar-expand-md navbar-dark bg-dark">
             <div className="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
                 <ul className="navbar-nav mr-auto">
@@ -18,15 +36,12 @@ const { cartCount } = useCartContext();
                     <li className="nav-item">
                     <Link to='/Productos' className="nav-link dropdown-toggle">Productos</Link>
                         <ul>
-                            <li>
-                                <NavLink className="nav-link dropdown-item" to='/Productos/Categoria/estrellas' activeClassName='activo'>Estrellas</NavLink>   
-                            </li>
-                            <li>
-                                <NavLink className="nav-link dropdown-item" to='/Productos/Categoria/planetas' activeClassName='activo'>Planetas</NavLink>
-                            </li>
-                            <li>
-                                <NavLink className="nav-link dropdown-item" to='/Productos/Categoria/satelites' activeClassName='activo'>Satelites</NavLink>
-                            </li>
+                            {categorias.map((c)=>(
+                                    <li key ={c}>
+                                        <NavLink className='nav-link dropdown-item' to={`/Productos/Categoria/${c}`} activeClassName='activo'>{c}</NavLink>   
+                                    </li>
+                                ))
+                           }
                         </ul>
                     </li>
                     <li className="nav-item">
@@ -44,7 +59,7 @@ const { cartCount } = useCartContext();
             <div className="navbar-collapse collapse w-100 order-2 dual-collapse2 justify-content-end">
                 <ul className="navbar-nav ml-auto">
                     <button className="btn btn-dark">
-                        <Link to="/Carrito" className="nav-link">{(cartCount>0)? cartCount : ''}<CartWidget/></Link> 
+                        <Link to="/Carrito" className="nav-link"><CartWidget qty={cartCount}/></Link> 
                     </button>
                 </ul>
             </div>

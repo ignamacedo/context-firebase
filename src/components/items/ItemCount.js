@@ -7,7 +7,7 @@ function ItemCount(props){
     return(
         <div>
             <form onSubmit={(data) => props.onAdd(data)}>
-                <input type='number' className='form-control' style={{width:'40%',textAlign:'center'}} disabled value={cantidad}/>
+                <input type='number' className='form-control' style={{width:'15%', textAlign:'center'}} disabled value={cantidad}/>
                 <button className='btn btn-secondary' type='button' onClick={() => {setCantidad((cantidad > props.initial)? cantidad - 1 : cantidad)}}> - </button>
                 <button className='btn btn-secondary' type='button' onClick={() => {setCantidad((cantidad < props.stock)? cantidad + 1 : cantidad)}}> + </button>
                 <button className='btn btn-primary' type='submit' onClick={props.terminarCompra}>Agregar al carrito</button>

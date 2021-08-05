@@ -1,23 +1,21 @@
-import React, {useState, useEffect }  from 'react';
+import React, {useState }  from 'react';
 import { useCartContext} from '../context/Context';
-
 import { Link } from 'react-router-dom';
 
 function Cart(){
 
-    const { cartItems, total, deleteItem} = useCartContext();
+    //falta renderizar cuando un elemento se elmina de la lista
+    const { cartItems, total, deleteItemContext} = useCartContext();
     const [cartList, setCartList] = useState(cartItems);
 
-    const eliminarItemCart = (index) =>{
-      //console.log(cartItems);
-      cartList.splice(index,1);
-       //console.log(cartItems);
-       setCartList(cartList);
+    const eliminarItemCart = (item) =>{
+      const copia = [...cartList];
+      const index = cartList.findIndex(p => p[0].id === item[0].id);
+      copia.splice(index,1);
+      setCartList(copia);
+    
+      deleteItemContext(item);
     }
-
-    useEffect(()=>{
-      deleteItem(cartList);
-    },[cartList])
 
     return (
       <div>
@@ -34,14 +32,17 @@ function Cart(){
 
             :
             <div>
+              <div style={{textAlign:'center'}}>
               <h2 className="alert alert-dark" style={{textAlign:'center'}}>TOTAL: ${total}M</h2>
               <button className='btn btn-secondary' type='button'>
                 <Link className="nav-link" to='/Productos' style={{color:'white'}}>
                   Continuar Comprando
                 </Link>
               </button>
+              </div>
 
-              
+              <div className="container-fluid">
+              <div className="row">
               {cartList.map((p,i) => (
                 <div key={i} className="col">
                   <div className='card text-white bg-dark mb-3' style={{width:'18rem',overflow:'hidden'}}>
@@ -52,12 +53,13 @@ function Cart(){
                       </div>
                       <ul className='list-group list-group-flush'>
                         <li className='list-group-item' style={{textAlign:'center'}}>${p[0].precio}M</li>
-                        <li style={{textAlign:'center'}}><button onClick={()=>{eliminarItemCart(i)}} className="btn btn-danger" >Quitar Item de la Lista</button></li>
+                        <li style={{textAlign:'center'}}><button onClick={()=>{eliminarItemCart(p)}} className="btn btn-danger" >Quitar Item de la Lista</button></li>
                       </ul>
                       
                 </div>
                 </div>
               ))}
+              </div></div>
             </div>
             }
         

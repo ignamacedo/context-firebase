@@ -1,16 +1,17 @@
-import React from 'react';
+import React,{ useState, useEffect} from 'react';
 import { useParams } from 'react-router';
-import { useState, useEffect} from 'react';
 import ItemCount from './ItemCount';
+import ItemDetail from './ItemDetail';
 import { Link } from 'react-router-dom';
 import {useCartContext} from '../context/Context';
 
-function ItemDetail(){
+function ItemDetailContainer(){
     
     const {itemID} = useParams();
     const [product, setProduct] = useState([]);
     const [qty, setQty] = useState(1);
     const [mostrarBtn, setMostrarBtn] = useState(true);
+    const [btn, setBnt] = useState(false);
 
     const { addToCart } = useCartContext();
 
@@ -20,7 +21,10 @@ function ItemDetail(){
     }
 
     const terminarCompra = () => {
-        setMostrarBtn(!mostrarBtn);
+        setBnt(true);
+        if(mostrarBtn){
+            setMostrarBtn(!mostrarBtn);
+        }
     } 
 
     const getProduct = async () =>{
@@ -39,32 +43,35 @@ function ItemDetail(){
 
     return (
         <div>
-        <h1>ITEM DETAIL</h1>
-        {product.map(e =>{
-            return (
-                <div key={e.id}>
+            {product.map(e =>{
+                return (
+                    <div key={e.id}>
                     {!mostrarBtn && <button className='btn btn-secondary' type='button' onClick={()=>addToCart(product,qty)} disabled={mostrarBtn}>
                         <Link className="nav-link" to='/Carrito' style={{color:'white'}}>
                             Agregaste {qty} items al carro - Terminar Compra
                         </Link>
                     </button>}
-                    <h1>{e.titulo}</h1>
-                    <h4>${e.precio}M</h4>
-                    <img src={e.imgUrl} alt={e.alt} style={{width:'300px',height:'300px'}}/>
-                    <h2>{e.descripcion}</h2>
-                    <h3>{'Categoria: '+e.categoria}</h3>
-                     <ItemCount 
+                    <ItemDetail 
+                        id={e.id}
+                        titulo={e.titulo}
+                        precio={e.precio}
+                        imgUrl={e.imgUrl}
+                        alt={e.alt}
+                        descripcion={e.descripcion}
+                        categoria={e.categoria}
+                    />
+                    <ItemCount 
                         stock={e.stock} 
                         initial={e.initial}
                         onAdd={onAdd}
                         terminarCompra={terminarCompra}
                         mostrarBtn={mostrarBtn}
                   />
-                </div>
-            )
-        })}
+                    </div>
+                )
+            })}
         </div>
     );
 }
 
-export default ItemDetail;
+export default ItemDetailContainer;
