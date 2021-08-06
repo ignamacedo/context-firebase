@@ -26,7 +26,7 @@ function ItemDetailContainer(){
             setMostrarBtn(!mostrarBtn);
         }
     } 
-
+ 
     const getProduct = async () =>{
         let data = await fetch(`http://localhost:4000/product/${itemID}`);
         const responseData = await data.json();
