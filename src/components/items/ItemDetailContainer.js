@@ -27,7 +27,7 @@ function ItemDetailContainer(){
         }
     } 
  
-    const getProduct = async () =>{
+    /*const getProduct = async () =>{
         let data = await fetch(`http://localhost:4000/product/${itemID}`);
         const responseData = await data.json();
         return new Promise((res, rej) => {
@@ -35,10 +35,24 @@ function ItemDetailContainer(){
             res(setProduct(responseData));
         },2000);
         });
-    }
+    }*/
 
     useEffect(() => {
-        getProduct();
+        //getProduct();
+        const firestore = getFireStore();
+        console.log(firestore);
+        const collection = firestore.collection("ItemCollection");
+        console.log(collection);
+        const condicion = collection.where(id, "==", itemID); 
+        const query = condicion.get();
+        query.then((resultado)=>{
+          console.log(resultado);
+          console.log(resultado.docs);
+          resultado.forEach(documento => {
+            console.log(documento.data());
+             setProduct(documento.data());
+          });
+        });
     });
 
     return (

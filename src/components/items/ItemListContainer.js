@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import Item from './Item';
+import { getFireStore } from '../../firebase/firebase';
 
 const ItemListContainer = (props) => {
 
   const [items,setItems] = useState([]);
 
   useEffect(()=>{
-    getItems();
+    //getItems();
+    const firestore = getFireStore();
+    console.log(firestore);
+    const collection = firestore.collection("ItemCollection");
+    console.log(collection);
+    const query = collection.get(); 
+    query.then((resultado)=>{
+      console.log(resultado);
+      console.log(resultado.docs);
+      resultado.forEach(documento => {
+        console.log(documento.data());
+         setItems(documento.data());
+      });
+    });
   },[]);
   
- 
- const getItems = async() =>{
+ /*const getItems = async() =>{
     const data = await fetch('http://localhost:4000/products');
     const responseData = await data.json();
     return new Promise((res, rej) => {
@@ -18,7 +31,7 @@ const ItemListContainer = (props) => {
         res(setItems(responseData));
       },2000);
     });
-  }
+  }*/
   
   return(
     <div>
