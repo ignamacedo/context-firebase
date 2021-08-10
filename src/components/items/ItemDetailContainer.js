@@ -28,7 +28,7 @@ function ItemDetailContainer(){
         }
     }
 
-    useEffect(()=>{
+    const getProduct = async () => {
         const firestore = getFireStore();
         const collection = firestore.collection("ItemCollection");
         const query = collection.get(); 
@@ -40,7 +40,11 @@ function ItemDetailContainer(){
               }
             });
         });
-      },[]);
+    }
+
+    useEffect(()=>{
+        getProduct();
+    },[]);
 
     return (
         <div>

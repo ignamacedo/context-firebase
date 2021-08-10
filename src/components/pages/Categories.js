@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router';
 import Item from '../items/Item';
+import { getFireStore } from '../../firebase/firebase';
 
 function Categories(){
 
@@ -8,18 +9,28 @@ function Categories(){
 
     const [productosCategoria, setProductosCategoria] = useState([]);
 
-    const getItemsCategoria = async() =>{
-        const data = await fetch(`http://localhost:4000/product/category/${categoriaID}`);
-        const responseData = await data.json();
-        return new Promise((res, rej) => {
-            setTimeout(() => {
-              res(setProductosCategoria(responseData));
-            },);
-          });
+  
+    const getItemsCategoria = async () => {
+        const firestore = getFireStore();
+        const collection = firestore.collection("ItemCollection");
+        const query = collection.get(); 
+        query.then((resultado)=>{
+          resultado.forEach(documento => {
+              if(categoriaID === documento.data().categoria){
+                productosCategoria.push(documento.data());
+                setProductosCategoria([...productosCategoria]);
+              }
+            });
+        });
     }
 
+    const vaciarLista = () => {
+        setProductosCategoria(productosCategoria.splice(0,productosCategoria.length));
+    }
+    
     useEffect(()=>{
         getItemsCategoria();
+        vaciarLista();
     },[categoriaID]);
 
     return(
