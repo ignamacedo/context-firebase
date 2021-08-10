@@ -14,7 +14,7 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 
 //empiezo a configurar los servicios
-export const getFireStore = () =>{
+export const getFireStore = () => {
     //retorna el acceso al servicio firestore
-    firebase.firestore(app);
+   return firebase.firestore(app);
 }

@@ -9,16 +9,17 @@ const ItemListContainer = (props) => {
   useEffect(()=>{
     //getItems();
     const firestore = getFireStore();
-    console.log(firestore);
+    //console.log(firestore);
     const collection = firestore.collection("ItemCollection");
-    console.log(collection);
+    //console.log(collection);
     const query = collection.get(); 
     query.then((resultado)=>{
-      console.log(resultado);
-      console.log(resultado.docs);
+      //console.log(resultado);
+      //console.log(resultado.docs);
       resultado.forEach(documento => {
-        console.log(documento.data());
-         setItems(documento.data());
+        //console.log(documento.data());
+        items.push(documento.data());
+         setItems([...items]);
       });
     });
   },[]);
@@ -35,12 +36,13 @@ const ItemListContainer = (props) => {
   
   return(
     <div>
+      {console.log(items)}
      <div className="container-fluid">
         <div className="row">
           <h1>Productos</h1>
           {(items.length === 0) ? 
             <p>LOADING....</p>
-            :
+            : 
             items.map((item) => (
               <Item key={item.id} item={item}/>
             ))

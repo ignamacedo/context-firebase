@@ -4,6 +4,7 @@ import ItemCount from './ItemCount';
 import ItemDetail from './ItemDetail';
 import { Link } from 'react-router-dom';
 import {useCartContext} from '../context/Context';
+import { getFireStore } from '../../firebase/firebase';
 
 function ItemDetailContainer(){
     
@@ -40,20 +41,20 @@ function ItemDetailContainer(){
     useEffect(() => {
         //getProduct();
         const firestore = getFireStore();
-        console.log(firestore);
+       // console.log(firestore);
         const collection = firestore.collection("ItemCollection");
-        console.log(collection);
-        const condicion = collection.where(id, "==", itemID); 
+        //console.log(collection);
+        const condicion = collection.where('id', '==', itemID); 
+        //console.log(condicion);
         const query = condicion.get();
+        //console.log(query);
         query.then((resultado)=>{
-          console.log(resultado);
-          console.log(resultado.docs);
           resultado.forEach(documento => {
-            console.log(documento.data());
-             setProduct(documento.data());
+            setProduct(documento.data()); 
+            console.log(product);
           });
         });
-    });
+    },[]);
 
     return (
         <div>
