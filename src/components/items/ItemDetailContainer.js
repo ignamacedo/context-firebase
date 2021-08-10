@@ -38,6 +38,23 @@ function ItemDetailContainer(){
         });
     }*/
 
+
+    /*useEffect(() => {
+        //getProduct();
+        const firestore = getFireStore();
+        //console.log(firestore);
+        const col = firestore.collection("ItemCollection");
+        //console.log(col);
+        const condicion = col.where('id', '==', 3); //itemID
+        //console.log(condicion);
+        condicion.get().then((qs) => {
+            if(qs.size === 0){
+                console.log('vacio');
+            }
+            setProduct(qs.docs.map(doc => doc.data())); 
+        })
+    },[]);*/
+
     useEffect(() => {
         //getProduct();
         const firestore = getFireStore();
