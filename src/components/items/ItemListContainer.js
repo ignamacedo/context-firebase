@@ -36,8 +36,7 @@ const ItemListContainer = (props) => {
   
   return(
     <div>
-      {console.log(items)}
-     <div className="container-fluid">
+      <div className="container-fluid">
         <div className="row">
           <h1>Productos</h1>
           {(items.length === 0) ? 

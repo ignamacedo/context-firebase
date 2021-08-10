@@ -38,9 +38,7 @@ function ItemDetailContainer(){
         });
     }*/
 
-
     /*useEffect(() => {
-        //getProduct();
         const firestore = getFireStore();
         //console.log(firestore);
         const col = firestore.collection("ItemCollection");
@@ -55,7 +53,7 @@ function ItemDetailContainer(){
         })
     },[]);*/
 
-    useEffect(() => {
+    /*useEffect(() => {
         //getProduct();
         const firestore = getFireStore();
         //console.log(firestore);
@@ -72,7 +70,27 @@ function ItemDetailContainer(){
             //console.log(doc.data());
           });
         });
-    },[]);
+    },[]);*/
+
+    useEffect(()=>{
+        //getItems();
+        const firestore = getFireStore();
+        //console.log(firestore);
+        const collection = firestore.collection("ItemCollection");
+        //console.log(collection);
+        const query = collection.get(); 
+        query.then((resultado)=>{
+          //console.log(resultado);
+          //console.log(resultado.docs);
+          resultado.forEach(documento => {
+              if(itemID === documento.id){
+                  product.push(documento.data());
+                  setProduct([...product]);
+                  //console.log(documento.data());
+              }
+            });
+        });
+      },[]);
 
     return (
         <div>
