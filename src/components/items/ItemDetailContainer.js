@@ -41,17 +41,18 @@ function ItemDetailContainer(){
     useEffect(() => {
         //getProduct();
         const firestore = getFireStore();
-       // console.log(firestore);
+        //console.log(firestore);
         const collection = firestore.collection("ItemCollection");
         //console.log(collection);
-        const condicion = collection.where('id', '==', itemID); 
+        const condicion = collection.where('id', '==', 4); //itemID
         //console.log(condicion);
         const query = condicion.get();
         //console.log(query);
-        query.then((resultado)=>{
-          resultado.forEach(documento => {
-            setProduct(documento.data()); 
-            console.log(product);
+        query.then((res)=>{
+            res.forEach(doc => {
+            product.push(doc.data());
+            setProduct([...product]); 
+            //console.log(doc.data());
           });
         });
     },[]);
