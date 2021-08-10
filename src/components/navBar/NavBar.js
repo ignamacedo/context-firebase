@@ -3,6 +3,7 @@ import CartWidget from './CartWidget';
 import logo from '../../img/logo.png';
 import { Link, NavLink } from 'react-router-dom'
 import { useCartContext} from '../context/Context';
+import { getFireStore } from '../../firebase/firebase';
 
 function NavBar(){
 
@@ -10,19 +11,22 @@ const { cartCount } = useCartContext();
 const [categorias, setCategorias] = useState([]) ;
 
     const getCategorias = async() =>{
-        const data = await fetch(`http://localhost:4000/categories`);
-        const responseData = await data.json();
-        return new Promise((res, rej) => {
-            setTimeout(() => {
-            res(setCategorias(responseData));
-            setCategorias(responseData);
-           },);
+        const firestore = getFireStore();
+        const collection = firestore.collection("ItemCollection");
+        const query = collection.get(); 
+        query.then((resultado)=>{
+          resultado.forEach(documento => {
+            if(!(categorias.includes(documento.data().categoria))){
+                    let cat = documento.data().categoria;
+                    categorias.push(cat)
+                    setCategorias([...categorias]);
+              }
+            });
         });
     }
 
     useEffect(()=>{
         getCategorias();
-        //console.log(categorias);
     },[]);
 
     return(
