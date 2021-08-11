@@ -28,18 +28,15 @@ function ItemDetailContainer(){
         }
     }
 
-    const getProduct = async () => {
+    const getProduct = () => {
         const firestore = getFireStore();
         const collection = firestore.collection("ItemCollection");
-        const query = collection.get(); 
-        query.then((resultado)=>{
-          resultado.forEach(documento => {
-              if(itemID === documento.id){
-                  product.push(documento.data());
-                  setProduct([...product]);
-              }
+        let query = collection.doc(itemID).get();
+        query
+            .then(doc=>{
+                product.push(doc.data());
+                setProduct([...product]);
             });
-        });
     }
 
     useEffect(()=>{

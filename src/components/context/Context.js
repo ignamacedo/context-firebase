@@ -35,16 +35,19 @@ const CartProvider = ({children}) =>{
      const deleteItemContext = (item) => {
       const copia = [...cartItems];
       const index = cartItems.findIndex(p => p[0].id === item[0].id);
-      console.log(copia);
+      const cantCartDelete = copia[index].qty;
+      setCartCount(cartCount - cantCartDelete);
       copia.splice(index,1);
-      console.log(copia);
       setCartItems(copia);
-      console.log(cartItems);
      }
-     
+
+     const limpiarLista = () => {
+      setCartCount(0);
+      setCartItems([]);
+     };
 
     return(
-        <CartContext.Provider value={{cartCount, cartItems, addToCart, total, deleteItemContext}}>
+        <CartContext.Provider value={{cartCount, cartItems, addToCart, total, deleteItemContext, limpiarLista}}>
             {children}
         </CartContext.Provider>
     );

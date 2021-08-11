@@ -10,18 +10,21 @@ function NavBar(){
 const { cartCount } = useCartContext();
 const [categorias, setCategorias] = useState([]) ;
 
-    const getCategorias = async() =>{
-        const firestore = getFireStore();
-        const collection = firestore.collection("ItemCollection");
-        const query = collection.get(); 
-        query.then((resultado)=>{
-          resultado.forEach(documento => {
-            if(!(categorias.includes(documento.data().categoria))){
-                    let cat = documento.data().categoria;
-                    categorias.push(cat)
+
+const getCategorias = () => {
+    const firestore = getFireStore();
+    const collection = firestore.collection("ItemCollection");
+    let query = collection.get();
+    query
+        .then(res=>{
+            res.forEach(doc=>{
+                if(!(categorias.includes(doc.data().categoria))){
+                    //console.log(doc.data());
+                    categorias.push(doc.data().categoria);
                     setCategorias([...categorias]);
-              }
-            });
+                }
+            })
+           
         });
     }
 

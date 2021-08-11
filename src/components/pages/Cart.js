@@ -1,12 +1,15 @@
 import React, {useState }  from 'react';
 import { useCartContext} from '../context/Context';
 import { Link } from 'react-router-dom';
+import { getFireStore } from '../../firebase/firebase';
 
 function Cart(){
 
     //falta renderizar cuando un elemento se elmina de la lista
-    const { cartItems, total, deleteItemContext} = useCartContext();
+    const { cartItems, total, deleteItemContext, limpiarLista} = useCartContext();
     const [cartList, setCartList] = useState(cartItems);
+    const [terminarCompra, setTerminarCompra] = useState(false);
+
 
     const eliminarItemCart = (item) =>{
       const copia = [...cartList];
@@ -17,9 +20,44 @@ function Cart(){
       deleteItemContext(item);
     }
 
+  const nuevaOrden = () => {
+
+    /* formato:
+    {buyer:{'Ignacio Macedo', '2966627258', 'ignaicomacedo1@gmail.com'}, 
+    items:[{id, title, price}], date, total} */
+    const  orden = {
+      buyer : {
+          name : 'Ignacio', 
+          phone : '2966627258', 
+          email : 'ignaicomacedo1@gmail.com'
+    },
+    orden : cartList,
+    total : total,
+    date : Date.now()
+    }
+
+    const firestore = getFireStore();
+    const collection = firestore.collection("OrderCollector");
+    const query = collection.add(orden);
+    query
+      .then((res)=>{
+        //console.log(res);
+        //console.log("Se creo la orden");
+        setTerminarCompra(res.id);
+        limpiarLista();
+        setCartList([]);
+      })
+      .catch((err) =>{
+        console.log(err);
+      })
+  };
+
     return (
       <div>
-        <h1>Cart</h1>
+        <h1>
+          Cart
+        </h1>
+        {terminarCompra && <div className="alert alert-success" role="alert">Confirmacion de compra: {terminarCompra}</div>} 
         {(cartList.length === 0) ? 
             <div>
             <h5 className="alert alert-dark" style={{textAlign:'center'}}>TODAVIA NO HAY PRODUCTOS EN EL CARRITO</h5>
@@ -32,6 +70,7 @@ function Cart(){
 
             :
             <div>
+              <button className='btn btn-success' style={{marginBottom:'5px'}}type='button' onClick={nuevaOrden}>Finalizar Compra</button>
               <div style={{textAlign:'center'}}>
               <h2 className="alert alert-dark" style={{textAlign:'center'}}>TOTAL: ${total}M</h2>
               <button className='btn btn-secondary' type='button'>
@@ -59,7 +98,8 @@ function Cart(){
                 </div>
                 </div>
               ))}
-              </div></div>
+              </div>
+              </div>
             </div>
             }
         

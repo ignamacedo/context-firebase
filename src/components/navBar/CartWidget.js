@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import carro from '../../img/carro.png';
 
 export default function CartWidget(props){

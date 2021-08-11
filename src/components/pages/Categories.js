@@ -9,7 +9,6 @@ function Categories(){
 
     const [productosCategoria, setProductosCategoria] = useState([]);
 
-  
     const getItemsCategoria = async () => {
         const firestore = getFireStore();
         const collection = firestore.collection("ItemCollection");
