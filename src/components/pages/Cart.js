@@ -5,7 +5,6 @@ import { getFireStore } from '../../firebase/firebase';
 
 function Cart(){
 
-    //falta renderizar cuando un elemento se elmina de la lista
     const { cartItems, total, deleteItemContext, limpiarLista} = useCartContext();
     const [cartList, setCartList] = useState(cartItems);
     const [terminarCompra, setTerminarCompra] = useState(false);
@@ -20,16 +19,14 @@ function Cart(){
       deleteItemContext(item);
     }
 
-  const nuevaOrden = () => {
-
-    /* formato:
-    {buyer:{'Ignacio Macedo', '2966627258', 'ignaicomacedo1@gmail.com'}, 
-    items:[{id, title, price}], date, total} */
+  const nuevaOrden = (form) => {
+    form.preventDefault();
+    
     const  orden = {
       buyer : {
-          name : 'Ignacio', 
-          phone : '2966627258', 
-          email : 'ignaicomacedo1@gmail.com'
+          name : form.target[0].value, 
+          phone : form.target[1].value, 
+          email : form.target[2].value
     },
     orden : cartList,
     total : total,
@@ -70,7 +67,15 @@ function Cart(){
 
             :
             <div>
-              <button className='btn btn-success' style={{marginBottom:'5px'}}type='button' onClick={nuevaOrden}>Finalizar Compra</button>
+              <form onSubmit={(data) => {nuevaOrden(data)}}>
+                <div style={{padding:'5px'}}>
+                  <p style={{fontWeight:'bold'}}>Para finalizar la compra ingrese:</p>
+                  <input type="text" style={{width:'250px'}} className="form-control" name="name" placeholder="Nombre" required/>
+                  <input type="text" style={{width:'250px'}} className="form-control" name="phone" placeholder="Telefono" required/>
+                  <input type="text" style={{width:'250px'}} className="form-control" name="email" placeholder="Email" required/>
+                  <button className='btn btn-success' type='submit'>Finalizar Compra</button>
+                </div>
+              </form>
               <div style={{textAlign:'center'}}>
               <h2 className="alert alert-dark" style={{textAlign:'center'}}>TOTAL: ${total}M</h2>
               <button className='btn btn-secondary' type='button'>
