@@ -9,12 +9,16 @@ import { getFireStore } from '../../firebase/firebase';
 function ItemDetailContainer(){
     
     const {itemID} = useParams();
+    
     const [product, setProduct] = useState([]);
     const [qty, setQty] = useState(1);
     const [mostrarBtn, setMostrarBtn] = useState(true);
-    const [btn, setBnt] = useState(false);
 
     const { addToCart } = useCartContext();
+
+    useEffect(()=>{
+        getProduct();
+    },[]);
 
     const onAdd = (form) => {
         form.preventDefault();
@@ -22,7 +26,6 @@ function ItemDetailContainer(){
     }
 
     const terminarCompra = () => {
-        setBnt(true);
         if(mostrarBtn){
             setMostrarBtn(!mostrarBtn);
         }
@@ -39,14 +42,10 @@ function ItemDetailContainer(){
             });
     }
 
-    useEffect(()=>{
-        getProduct();
-    },[]);
-
     return (
         <div>
             {product.map(e =>{
-                return (
+                return(
                     <div key={e.id}>
                     {!mostrarBtn && <button className='btn btn-secondary' type='button' onClick={()=>addToCart(product,qty)} disabled={mostrarBtn}>
                         <Link className="nav-link" to='/Carrito' style={{color:'white'}}>

@@ -9,7 +9,6 @@ function Cart(){
     const [cartList, setCartList] = useState(cartItems);
     const [terminarCompra, setTerminarCompra] = useState(false);
 
-
     const eliminarItemCart = (item) =>{
       const copia = [...cartList];
       const index = cartList.findIndex(p => p[0].id === item[0].id);
@@ -38,8 +37,6 @@ function Cart(){
     const query = collection.add(orden);
     query
       .then((res)=>{
-        //console.log(res);
-        //console.log("Se creo la orden");
         setTerminarCompra(res.id);
         limpiarLista();
         setCartList([]);
@@ -57,15 +54,14 @@ function Cart(){
         {terminarCompra && <div className="alert alert-success" role="alert">Confirmacion de compra: {terminarCompra}</div>} 
         {(cartList.length === 0) ? 
             <div>
-            <h5 className="alert alert-dark" style={{textAlign:'center'}}>TODAVIA NO HAY PRODUCTOS EN EL CARRITO</h5>
+            <h5 className="alert alert-dark" style={{textAlign:'center'}}>NO HAY PRODUCTOS EN EL CARRITO</h5>
             <button className='btn btn-secondary' type='button'>
               <Link className="nav-link" to='/Productos' style={{color:'white'}}>
                 Ver Productos
               </Link>
             </button>
             </div>
-
-            :
+              :
             <div>
               <form onSubmit={(data) => {nuevaOrden(data)}}>
                 <div style={{padding:'5px'}}>
@@ -107,9 +103,6 @@ function Cart(){
               </div>
             </div>
             }
-        
-      
-        
       </div>
     );
 }

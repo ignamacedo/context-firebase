@@ -6,10 +6,14 @@ import { getFireStore } from '../../firebase/firebase';
 function Categories(){
 
     const {categoriaID} = useParams();
-
     const [productosCategoria, setProductosCategoria] = useState([]);
 
-    const getItemsCategoria = async () => {
+    useEffect(()=>{
+        getItemsCategoria();
+        vaciarLista();
+    },[categoriaID]);
+
+    const getItemsCategoria = () => {
         const firestore = getFireStore();
         const collection = firestore.collection("ItemCollection");
         const query = collection.get(); 
@@ -26,11 +30,6 @@ function Categories(){
     const vaciarLista = () => {
         setProductosCategoria(productosCategoria.splice(0,productosCategoria.length));
     }
-    
-    useEffect(()=>{
-        getItemsCategoria();
-        vaciarLista();
-    },[categoriaID]);
 
     return(
         <div>
@@ -40,9 +39,7 @@ function Categories(){
             <div className="row">
             {(productosCategoria.length === 0) ? 
                 <p>LOADING....</p>
-                
                 :
-                
                 productosCategoria.map((e) => (
                     <div  key={e.id} className="col">
                         <Item key={e.id} item={e}/>

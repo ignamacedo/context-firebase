@@ -2,9 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Item = ({ item }) => {
-
     return(
-        
         <div className="col">
            <div className='card text-white bg-dark mb-3' style={{width:'18rem',overflow:'hidden'}}>
                 <img className='card-img-top' src={item.imgUrl} alt={item.alt} style={{width:'350px',height:'270px'}}/>
@@ -20,7 +18,6 @@ const Item = ({ item }) => {
                 </ul>
             </div>
         </div>
-    
     );
 }
 

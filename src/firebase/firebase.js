@@ -10,11 +10,8 @@ const firebaseConfig = {
     appId: "1:1003154722249:web:7559303a86e268187fac18"
 };
 
-//Hace que fire quede conectado a la app de la consola
 const app = firebase.initializeApp(firebaseConfig);
 
-//empiezo a configurar los servicios
 export const getFireStore = () => {
-    //retorna el acceso al servicio firestore
    return firebase.firestore(app);
 }

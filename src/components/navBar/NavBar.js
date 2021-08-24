@@ -7,19 +7,21 @@ import { getFireStore } from '../../firebase/firebase';
 
 function NavBar(){
 
-const { cartCount } = useCartContext();
-const [categorias, setCategorias] = useState([]) ;
+    const { cartCount } = useCartContext();
+    const [categorias, setCategorias] = useState([]) ;
 
+    useEffect(()=>{
+        getCategorias();
+    },[]);
 
-const getCategorias = () => {
-    const firestore = getFireStore();
-    const collection = firestore.collection("ItemCollection");
-    let query = collection.get();
-    query
+    const getCategorias = () => {
+        const firestore = getFireStore();
+        const collection = firestore.collection("ItemCollection");
+        let query = collection.get();
+        query
         .then(res=>{
             res.forEach(doc=>{
                 if(!(categorias.includes(doc.data().categoria))){
-                    //console.log(doc.data());
                     categorias.push(doc.data().categoria);
                     setCategorias([...categorias]);
                 }
@@ -27,13 +29,8 @@ const getCategorias = () => {
            
         });
     }
-
-    useEffect(()=>{
-        getCategorias();
-    },[]);
-
+    
     return(
-        
         <nav className="navbar navbar-expand-md navbar-dark bg-dark">
             <div className="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
                 <ul className="navbar-nav mr-auto">

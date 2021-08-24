@@ -1,7 +1,6 @@
 import React from 'react';
  
 function ItemDet(props){
-
     return (
         <div>
             <h1>ITEM DETAIL</h1>
